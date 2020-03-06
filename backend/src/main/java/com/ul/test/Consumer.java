@@ -14,46 +14,25 @@ public class  Consumer {
         this.queue = queue; 
     }
 
-    public List<List<Message>> getMessages(int size) {    	    	
-    	List<List<Message>> list = new ArrayList<List<Message>>();
-    	int count = 0;
+    public List<String> getMessages() {    	    	
+    	List<String> list = new ArrayList<String>();   	
     	
+    	try {
+    		
     	 while(true) {    		
-    		try {
-    			if (count % size == 0) {    				
-    				list.add(new ArrayList<Message>());    							
-    		    }
-    			list.get(list.size() - 1).add(queue.take());    			
-    			count++;
+    			Message message = queue.take();	
+    			list.add(message.toString());
     			
-    			if (queue.isEmpty()) {
+    			if(queue.size() == 0) {
     				break;
-                }    			
-    		} catch (InterruptedException e) {
-    			e.printStackTrace();
-    		}
+    			}
     	 }
     	 
-    	 sortList(list);
-    	 
+    	} catch (InterruptedException e) {
+    		e.printStackTrace();
+    	}
     	 
     	 return list;
     }
-
-	private void sortList(List<List<Message>> lista) {
-		IntStream.range(0, lista.size())
-    	  .forEach(idx ->    	  
-    	      lista.set(idx, sort(lista.get(idx)))    	    
-    	  );
-	}
-
-	private List<Message> sort(List<Message> messages) {
-		List<Message> collect = messages.stream().sorted(new Comparator<Message>() {
-			@Override
-			public int compare(Message o1, Message o2) {
-				return o2.getPriority().getValue() - o1.getPriority().getValue();
-			}
-		}).collect(Collectors.toList());
-		return collect;
-	}  
+	
 }

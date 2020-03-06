@@ -16,16 +16,13 @@ export class MessageService {
 
   constructor(private http: HttpClient, private notificationService: NotificationService) {}
 
-  getMessages(size: number): Observable<[Message[]]> {
-    const params = new HttpParams().set('size', size.toString());
-
-    params.append('size', size.toString());
+  getMessages(): Observable<string[]> {
     this.notificationService.notify('Messages fetched!');
-    return this.http.get<[Message[]]>(this.url, {params});
+    return this.http.get<string[]>(this.url);
   }
 
-  generateMessages(total: number): Observable<any> {
+  generateMessages(): Observable<any> {
     this.notificationService.notify('Messages generated on server!');
-    return this.http.post<string>(this.url, {total}, this.httpOptions);
+    return this.http.post<string>(this.url, {total: 10}, this.httpOptions);
   }
 }

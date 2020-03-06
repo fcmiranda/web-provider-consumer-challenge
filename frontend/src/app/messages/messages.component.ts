@@ -10,11 +10,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./messages.component.css']
 })
 export class MessagesComponent implements OnInit {
-  listMessages: [Message[]];
-  total = 1; size = 1;
+  listMessages: string[];
   generated: boolean;
-  displayedColumns: string[] = ['priority', 'content', 'date'];
-
   constructor(private messageService: MessageService, private notificationService: NotificationService) {
   }
 
@@ -22,11 +19,11 @@ export class MessagesComponent implements OnInit {
   }
 
   generateMessages(total: number): void {
-   this.messageService.generateMessages(total).subscribe(response => console.log(response));
+   this.messageService.generateMessages().subscribe(response => console.log(response));
   }
 
   getMessages(size: number): void {
-   this.messageService.getMessages(size).subscribe(listMessages => this.listMessages = listMessages);
+   this.messageService.getMessages().subscribe(listMessages => this.listMessages = listMessages);
   }
 
 }

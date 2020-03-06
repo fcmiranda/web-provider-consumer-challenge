@@ -23,8 +23,8 @@ public class TestService {
 	}
 	
  @RequestMapping(value = "/messages", method = RequestMethod.GET, produces="application/json")
- public List<List<Message>> getMessages(@RequestParam(value = "size") int size) {
-	 return new Consumer(queue).getMessages(size);
+ public List<String> getMessages() {
+	 return new Consumer(queue).getMessages();
  }
  
  @RequestMapping(value = "/messages", method = RequestMethod.POST, produces="application/json")
